@@ -29,11 +29,3 @@ class HarborAPIClient:
             # 处理请求异常
             print(f"Request error: {e}")
             return None
-    def list_projects(self):
-        url = self.api + '/projects?page=1&page_size=40&with_detail=true'
-        resp = self.make_request(url)
-        return resp
-    def check_health(self):
-        url = self.api + '/health'
-        resp = self.make_request(url)
-        return resp
