@@ -1,5 +1,5 @@
-from config import auth
-from harbor_model import HarborAPIClient,ListProject,CheckHealth
+from harbor.config import auth
+from harbor.harbor_model import HarborAPIClient,ListProject,CheckHealth
 
 if __name__ == '__main__':
     harbor_auth = auth.HARBOR_BASIC_AUTH
