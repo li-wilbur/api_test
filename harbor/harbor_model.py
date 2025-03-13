@@ -1,11 +1,10 @@
 import requests
 # 定义一个基础的 Harbor API 类，用于封装通用的请求逻辑
 class HarborAPIClient:
-    def __init__(self, auth, base_url):
+    def __init__(self, auth):
         self.username = auth['username']
         self.password = auth['password']
         self.api = auth['api']
-        #self.base_url = base_url
         self.headers = {'Content-Type': 'application/json'}
 
     def ping(self):
@@ -27,27 +26,11 @@ class HarborAPIClient:
             # 处理请求异常
             print(f"Request error: {e}")
             return None
-
-# 定义一个列出项目的类，继承自 HarborAPIClient
-class ListProject(HarborAPIClient):
-    def __init__(self, auth):
-        super().__init__(auth, '')
-        self.base_url = self.api + '/projects?page=1&page_size=40&with_detail=true'
-
-    def list_project(self):
-        resp = self.make_request(self.base_url)
-        if resp:
-            return resp.json()
-        return None
-
-# 定义一个检查健康状态的类，继承自 HarborAPIClient
-class CheckHealth(HarborAPIClient):
-    def __init__(self, auth):
-        super().__init__(auth, '')
-        self.base_url = self.api + '/health'
-
+    def list_projects(self):
+        url = self.api + '/projects?page=1&page_size=40&with_detail=true'
+        resp = self.make_request(url)
+        return resp
     def check_health(self):
-        resp = self.make_request(self.base_url)
-        if resp:
-            return resp.json().get('components')
-        return None
+        url = self.api + '/health'
+        resp = self.make_request(url)
+        return resp

@@ -1,12 +1,12 @@
 from harbor.config import auth
-from harbor.harbor_model import HarborAPIClient,ListProject,CheckHealth
+from harbor.harbor_model import HarborAPIClient
 
 if __name__ == '__main__':
     harbor_auth = auth.HARBOR_BASIC_AUTH
 
     # 列出项目
-    project_list = ListProject(auth=harbor_auth)
-    projects = project_list.list_project()
+    project_list = HarborAPIClient(auth=harbor_auth)
+    projects = project_list.list_projects().json()
     if projects:
         print("Projects:")
         for project in projects:
@@ -15,8 +15,8 @@ if __name__ == '__main__':
         print("Failed to retrieve projects.")
 
     # 检查健康状态
-    health_check = CheckHealth(auth=harbor_auth)
-    components = health_check.check_health()
+    health_check = HarborAPIClient(auth=harbor_auth)
+    components = health_check.check_health().json().get('components')
     if components:
         print("Health Components:")
         for component in components:
