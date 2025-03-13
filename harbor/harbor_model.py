@@ -12,7 +12,10 @@ class HarborAPIClient:
         resp = self.make_request(url)
         if resp:
             result = resp.text
-            return result == 'Pong'
+            if result == 'Pong':
+                return True
+            else:
+                return False
         return False
 
     def make_request(self, url):
